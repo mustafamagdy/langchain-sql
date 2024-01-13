@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    build: 
+      context: .
+      dockerfile: Dockerfile.sqlserver
+    environment:
+      SA_PASSWORD: "Abcd@1234"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+  jupyter:
+    build: 
+      context: .
+      dockerfile: Dockerfile.jupyter
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    ports:
+      - "8888:8888"
+    command: start-notebook.sh --NotebookApp.token=''
+    depends_on:
+      - sqlserver

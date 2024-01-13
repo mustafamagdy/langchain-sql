@@ -1,0 +1,9 @@
+# Use the base Jupyter Notebook with SciPy
+FROM jupyter/scipy-notebook
+
+# Install pyodbc
+RUN pip install pyodbc
+RUN !pip install langchain
+RUN !pip install openai
+RUN !pip install matplotlib
+RUN !pip install seaborn
