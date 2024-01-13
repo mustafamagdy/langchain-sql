@@ -1,0 +1,3 @@
+# Use the base Jupyter Notebook with SciPy
+FROM quay.io/jupyter/scipy-notebook:2024-01-08
+

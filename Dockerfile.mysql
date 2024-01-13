@@ -1,0 +1,15 @@
+# Use the official image as a parent image
+FROM mysql:latest
+
+# Set the working directory in the container
+WORKDIR /
+
+# Set environment variables
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=adventureworks
+
+# Copy the database schema to the docker entrypoint directory
+COPY ./AdventureWorks2019.sql /docker-entrypoint-initdb.d/
+
+# Expose port 3306
+EXPOSE 3306

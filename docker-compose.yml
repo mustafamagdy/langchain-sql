@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Abcd@1234
+      - MYSQL_DATABASE=AdventureWorks2022
+    ports:
+      - "3309:3306"
+
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook:2024-01-08
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+      - NOTEBOOK_ARGS=--allow-root
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    ports:
+      - "8888:8888"
+    command: start-notebook.sh --NotebookApp.token=''
+    depends_on:
+      - mysql

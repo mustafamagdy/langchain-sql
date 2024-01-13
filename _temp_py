@@ -1,0 +1,39 @@
+import openai
+import pyodbc
+from langchain.llms import OpenAI
+
+# Replace with your OpenAI API key
+openai.api_key = ''
+
+# Langchain setup with OpenAI
+openai_llm = OpenAI(api_key=openai.api_key)
+
+# Define a function using Langchain with OpenAI
+def ask_openai(question):
+    response = openai_llm.complete(prompt=question)
+    return response
+
+# SQL Server connection parameters
+server = 'sqlserver'  # e.g., 'localhost'
+database = 'your-database-name'
+username = 'your-username'
+password = 'your-password'
+
+# Establish a connection to SQL Server
+connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+conn = pyodbc.connect(connection_string)
+
+# Example: Using Langchain to interact with OpenAI
+question = "What is the capital of France?"
+answer = ask_openai(question)
+print("OpenAI's answer:", answer)
+
+# Example: Executing a SQL query
+cursor = conn.cursor()
+cursor.execute("SELECT TOP 10 * FROM YourTableName")  # Replace with your SQL query
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
+# Close the database connection
+conn.close()
